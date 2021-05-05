@@ -24,7 +24,9 @@ def kmeans(k, X):
   n = X.shape[1]
   curr_iteration = prev_iteration = np.zeros(m) 
   # TODO: сгенерировать k кластерных центров со случайными координатами.
-  centers = np.random.random((k, n))
+  mn=np.min(X, axis=0) 
+  mx=np.max(X, axis=0) 
+  centers = np.random.uniform(mn, mx, (k, n))
   # приписываем каждую точку к заданному классу
   curr_iteration = class_of_each_point(X, centers)
   # TODO: условие выхода из цикла - векторы curr_iteration и prev_iteration стали равны
