@@ -6,7 +6,7 @@ from sklearn import linear_model
 from PIL import Image, ImageDraw 
 
 #открытие изображения
-im = Image.open('D:\Учёба Курс 2 Семестр 2\Python\Python Pract\Pract-06\Pract-06 v.1\image.jpg')
+im = Image.open(r'D:\Учёба Курс 2 Семестр 2\Python\Python Pract\Pract-06\Pract-06 v.1\image.jpg')
 data = np.array(im.getdata()).reshape([im.height, im.width,3])
 
 #создание матрицы входных признаков
@@ -57,7 +57,7 @@ plt.show()
 raz=y1 -predicted#разность
 bits_per_channel = 4#задаем сколько бит потребуется для хранения разностей в каждой точке
 threshold=bits_per_channel*2
-diff=np.clip(raz)
+diff=np.clip(raz, 0, 135)
 y = predicted + diff
 
 #подмена пикселов в исходном изображении
@@ -79,20 +79,20 @@ del draw
 raz=y1 -predicted#разность
 bits_per_channel = 3 
 threshold=bits_per_channel*2
-diff=np.clip(raz)
+diff=np.clip(raz, 0, 135)
 y = predicted + diff 
 raz=y1 -predicted#разность
 bits_per_channel = 5 
 threshold=bits_per_channel*2
-diff=np.clip(raz)
+diff=np.clip(raz, 0, 135)
 y = predicted + diff 
 raz=y1 -predicted#разность
 bits_per_channel = 6 
 threshold=bits_per_channel*2
-diff=np.clip(raz)
+diff=np.clip(raz, 0, 135)
 y = predicted + diff 
 raz=y1 -predicted#разность
 bits_per_channel = 7 
 threshold=bits_per_channel*2
-diff=np.clip(raz)
+diff=np.clip(raz, 0, 135)
 y = predicted + diff 
