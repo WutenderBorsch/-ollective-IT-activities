@@ -34,5 +34,3 @@ for str in trueStr.split(", "):
     result = re.findall(r'<img ((alt|src)="[^"]*" (alt|src)="[^"]*")>', str)
     if len(result) != 0:
         print(result[0][0])
-
-# <img ((alt=|src=)"[^"]+ (alt=|src=)"[^"]+)>
