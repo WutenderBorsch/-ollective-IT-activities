@@ -4,17 +4,14 @@ import math
 def k_nearest(X, k, obj):
     
     # нормализация каждого столбца (кроме последнего)
-    sub_X = X[:, 0:-1]
-    mx=np.max(sub_X, axis=0)
-    norm_X = sub_X/mx
+    mx=np.max(X[:, 0:-1], axis=0)
+    norm_X = X[:, 0:-1]/mx
     
     # нормализация объекта obj
     norm_obj = obj/mx
-    
-    distance = np.zeros((16, k-1))
-    for i in range(16):
+    distance = np.zeros((len(X), k-1))
+    for i in range(len(X)):
        distance[i] = dist(norm_X[i], norm_obj)
-   
     # получение с помощью функции np.argsort индексы соседей по мере их удаления от obj.
     sort = np.argsort(distance, axis=0)
     
@@ -32,3 +29,4 @@ def k_nearest(X, k, obj):
 # вычисление евклидова расстояния между двумя точками
 def dist(p1, p2):
     return math.sqrt(sum((p1-p2)**2))
+
