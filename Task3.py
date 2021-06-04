@@ -1,8 +1,7 @@
 import numpy as np
 
 def СyclicShift(a):
-    b = a[k:]+a[:k]
-    return b
+    return a[k:]+a[:k]
 
 a = [1, 2, 3, 4, 5]  
 print (a) # вывод Массива
