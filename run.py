@@ -1,5 +1,6 @@
 import numpy as np
 from kNN import k_nearest
+import sys
 
 X = np.array([[33, 21, 1],
               [41, 13, 1],
@@ -18,8 +19,12 @@ X = np.array([[33, 21, 1],
               [135, 47, 4],
               [138, 66, 4]])
 
-height = int(input("Введите рост: "))
-weight = int(input("Введите вес: "))
+try:
+    height = int(input("Введите рост: "))
+    weight = int(input("Введите вес: "))
+except ValueError:
+    print("Введено не число.")
+    sys.exit()
 obj = np.array([height, weight])
 
 # классификация методом k ближайших соседей
