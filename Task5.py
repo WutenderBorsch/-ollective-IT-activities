@@ -4,8 +4,7 @@ import math
 
 def EuclideanDistance(a, b):
     diff = [(a[i] - b[i])**2 for i in range(len(a))]
-    evRast = math.sqrt(sum(diff))
-    return evRast
+    return math.sqrt(sum(diff))
     
 print("Введите размер матрицы")
 n = int(input())
