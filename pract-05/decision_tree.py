@@ -36,8 +36,8 @@ def decision_tree(X, Y, scale, level=0):
          for j in range(tn):
              indx = np.where(X[:, i] == u[j]) #индексы элементов подмножства
              Tj = Y[indx] 
-             temp = len(Tj) / len(X[:, i])
-             info_s += temp*Info(Tj)
+             weight = len(Tj) / len(X[:, i])
+             info_s += weight*Info(Tj)
          gain.append(info - info_s)
 
         else:  # непрерывный признак
@@ -109,9 +109,9 @@ def Info(set):
         p = np.sum(set == i) / m
         if p == 0:
             continue
-        info += p * np.log2(p)
+        info += p * np.log2(p) if p > 0 else 0
     info *= -1
-    return info
+    return -info
 
 def print_indent(level):
     print(level * '  ', end='')
