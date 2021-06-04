@@ -14,10 +14,9 @@ def decision_tree(X, Y, scale, level=0):
         print('class = %d' % Y[0])
         return
     print('')
-
-    n = X.shape[1]  # количество признаков
-    m = X.shape[0]  # количество примеров
-
+    
+    m, n = X.shape  # количество признаков и примеров
+    
     # энтропия до разбиения
     info = Info(Y)
 
