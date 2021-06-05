@@ -31,10 +31,8 @@ for i in doc.select('.comment'):
 
     title = i.select('.text-truncate')[0].find('a').get_text().strip()
     comment = i.select('.comment-text')[0].find('div').get_text().strip()
-
-    print("\tимя:", title)
-    print("\tсообщение:", comment)
-    print()
+    
+    print("\tИмя:", title,"\n\tCообщение:", comment,'\n')
     com.append({'title': title, 'comment': comment, 'rating': rating})
 
 msg = sorted(com, key=lambda x: x['rating'])[len(com)-1]
