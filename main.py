@@ -9,9 +9,7 @@ title = doc.select('.anime-title')[0].find('h1').get_text()
 rating = doc.select('.rating-value')[0].decode_contents().strip()
 ratingСount = doc.select('.rating-count')[0].decode_contents().strip()
 
-print('Название:', title)
-print('Рейтинг:', rating)
-print('Количество отзывов:', ratingСount)
+print('Название:', title, '\nРейтинг: ', rating, '\nКоличество отзывов:', ratingСount)
 
 print('\n\nСвязанные сериалы:\n')
 
@@ -40,5 +38,4 @@ for i in doc.select('.comment'):
     com.append({'title': title, 'comment': comment, 'rating': rating})
 
 msg = sorted(com, key=lambda x: x['rating'])[len(com)-1]
-print('самый популярный комментарий:', msg['comment'])
-print('количество лайков:', msg['rating'])
+print('Самый популярный комментарий:', msg['comment'], '\nКоличество лайков:', msg['rating'])
