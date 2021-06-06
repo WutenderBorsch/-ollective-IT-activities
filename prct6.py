@@ -26,39 +26,27 @@ plt.grid()
 plt.show()
 
 #построение кривой, описывающая оттенки строки изображения
-lm = linear_model.LinearRegression()
-lm.fit(X, y1) #blue
-predicted = lm.predict(X)
-plt.plot(x, y1, 'grey') #реальные значения
-plt.plot(predicted, 'b') #предсказанные
-plt.title('Описание строки изобржения с помощью полинома 5 степени (blue)')
-plt.grid()
-plt.show()
+def function(y):
+	lm = linear_model.LinearRegression()
+	lm.fit(X, y) #red
+	predicted = lm.predict(X)
+	plt.plot(x, y, 'grey') #реальные значения
+	plt.plot(predicted, 'b') #предсказанные
+	plt.title('Описание строки изобржения с помощью полинома 5 степени')
+	plt.grid()
+	plt.show()
+	return predicted
 
-lm = linear_model.LinearRegression()
-lm.fit(X, y2) #green
-predicted = lm.predict(X)
-plt.plot(x, y2, 'grey') #реальные значения
-plt.plot(predicted, 'b') #предсказанные
-plt.title('Описание строки изобржения с помощью полинома 5 степени (green)')
-plt.grid()
-plt.show()
-
-lm = linear_model.LinearRegression()
-lm.fit(X, y3) #red
-predicted = lm.predict(X)
-plt.plot(x, y3, 'grey') #реальные значения
-plt.plot(predicted, 'b') #предсказанные
-plt.title('Описание строки изобржения с помощью полинома 5 степени (red)')
-plt.grid()
-plt.show()
+c_predicted = function(y1)
+c_predicted = function(y2)
+c_predicted = function(y3)
 
 #кодирование разностей
-raz=y1 -predicted#разность
+raz=y1 -c_predicted#разность
 bits_per_channel = 4#задаем сколько бит потребуется для хранения разностей в каждой точке
 threshold=bits_per_channel*2
 diff=np.clip(raz, 0, 135)
-y = predicted + diff
+y = c_predicted + diff
 
 #подмена пикселов в исходном изображении
 draw = ImageDraw.Draw(im) #создаем инструмент для рисования. 
@@ -76,23 +64,23 @@ im.save('ready.png')
 del draw
 
 #Привести результаты кодирования изображения 3, 4, 5, 6 и 7 битами, а также исходное изображение. 
-raz=y1 -predicted#разность
+raz=y1 -c_predicted#разность
 bits_per_channel = 3 
 threshold=bits_per_channel*2
 diff=np.clip(raz, 0, 135)
-y = predicted + diff 
-raz=y1 -predicted#разность
+y = c_predicted + diff 
+raz=y1 -c_predicted#разность
 bits_per_channel = 5 
 threshold=bits_per_channel*2
 diff=np.clip(raz, 0, 135)
-y = predicted + diff 
-raz=y1 -predicted#разность
+y = c_predicted + diff 
+raz=y1 -c_predicted#разность
 bits_per_channel = 6 
 threshold=bits_per_channel*2
 diff=np.clip(raz, 0, 135)
-y = predicted + diff 
-raz=y1 -predicted#разность
+y = c_predicted + diff 
+raz=y1 -c_predicted#разность
 bits_per_channel = 7 
 threshold=bits_per_channel*2
 diff=np.clip(raz, 0, 135)
-y = predicted + diff 
+y = c_predicted + diff 
