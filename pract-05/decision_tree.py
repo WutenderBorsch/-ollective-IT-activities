@@ -107,10 +107,7 @@ def Info(set):
     n = np.unique(set)
     for i in n:
         p = np.sum(set == i) / m
-        if p == 0:
-            continue
         info += p * np.log2(p) if p > 0 else 0
-    info *= -1
     return -info
 
 def print_indent(level):
