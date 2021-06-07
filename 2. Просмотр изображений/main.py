@@ -43,8 +43,7 @@ def Left(i):
     i.x -= 1
 
     pixmap = QPixmap(str(images[i.x]))
-    lable.setPixmap(pixmap)
-    return
+    return lable.setPixmap(pixmap)
 
 def Right(i):
     if i.x == len(images) - 1:
@@ -52,8 +51,7 @@ def Right(i):
 
     i.x += 1
     pixmap = QPixmap(str(images[i.x]))
-    lable.setPixmap(pixmap)
-    return
+    return lable.setPixmap(pixmap)
 
 def main():
 
