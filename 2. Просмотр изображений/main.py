@@ -1,78 +1,76 @@
 import sys
 import os
-from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 
-app = QApplication(sys.argv)
-w = QWidget()
 
-patch = QFileDialog.getExistingDirectory(None, "Select folder", ".")
+class Window(QWidget):
+    def __init__(self):
+        super().__init__()
 
-if patch == '':
-    quit()
+        self.x = 0
+        patch = QFileDialog.getExistingDirectory(None, "Select folder", ".")
 
-files = os.listdir(patch)
+        if patch == '':
+            quit()
 
-images = []
+        files = os.listdir(patch)
 
-for x in files:
-    if x.endswith('.png'):
-        images.append(patch + "\\" + x)
+        self.images = []
 
-if len(images) == 0:
-    quit()
+        for x in files:
+            if x.endswith('.png'):
+                self.images.append(patch + "\\" + x)
 
-lable = QLabel(w)
+        if len(self.images) == 0:
+            quit()
 
-pixmap = QPixmap(str(images[0]))
+        self.label = QLabel(self)
 
-lable.setPixmap(pixmap)
-lable.setMaximumWidth(500)
-lable.setMaximumHeight(500)
+        pixmap = QPixmap(str(self.images[0]))
 
+        self.label.setPixmap(pixmap)
+        self.label.setMaximumWidth(500)
+        self.label.setMaximumHeight(500)
 
-class Container:
-    def __init__(self, x):
-        self.x = x
+        self.left = QPushButton("<--")
+        self.fight = QPushButton("-->")
 
-def Left(i):
-    if i.x == 0:
-        return
+        self.x = 0
 
-    i.x -= 1
+        self.left.clicked.connect(lambda: self.Left())
+        self.fight.clicked.connect(lambda: self.Right())
 
-    pixmap = QPixmap(str(images[i.x]))
-    return lable.setPixmap(pixmap)
+        self.grid = QGridLayout()
+        self.setLayout(self.grid)
 
-def Right(i):
-    if i.x == len(images) - 1:
-        return
+        self.grid.addWidget(self.left, 3, 0)
+        self.grid.addWidget(self.fight, 3, 1)
 
-    i.x += 1
-    pixmap = QPixmap(str(images[i.x]))
-    return lable.setPixmap(pixmap)
-
-def main():
-
-    left = QPushButton("<--")
-    fight = QPushButton("-->")
-
-    x = Container(0)
-
-    left.clicked.connect(lambda: Left(x))
-    fight.clicked.connect(lambda: Right(x))
-
-    grid = QGridLayout();
-    w.setLayout(grid)
-
-    grid.addWidget(lable, 0, 0, 0, 2)
-
-    grid.addWidget(left, 3, 0)
-    grid.addWidget(fight, 3, 1)
-
-    w.show()
+        self.grid.addWidget(self.label, 0, 0, 0, 2)
 
 
-main()
-sys.exit(app.exec_())
+    def Left(self):
+        if self.x == 0:
+            return
+
+        self.x -= 1
+
+        pixmap = QPixmap(str(self.images[self.x]))
+        return self.label.setPixmap(pixmap)
+
+    def Right(self):
+        if self.x == len(self.images) - 1:
+            return
+
+        self.x += 1
+        pixmap = QPixmap(str(self.images[self.x]))
+        return self.label.setPixmap(pixmap)
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = Window()
+    ex.show()
+    sys.exit(app.exec_())
+

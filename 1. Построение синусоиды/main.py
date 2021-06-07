@@ -1,8 +1,4 @@
-from PyQt5 import QtGui
-
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QDialog
-from PyQt5.QtGui import QPainter, QBrush, QPen
-from PyQt5.QtCore import Qt
 
 import numpy as np
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
@@ -14,7 +10,7 @@ import sys
 class Window(QDialog):
     def __init__(self):
         super().__init__()
-        uic.loadUi('untitled.ui', self)
+        uic.loadUi('View.ui', self)
         self.figure = plt.figure()
         self.canvas = FigureCanvas(self.figure)
         self.verticalLayout.insertWidget(0, self.canvas)
@@ -25,9 +21,6 @@ class Window(QDialog):
         self.horizontalSlider.valueChanged.connect(self.widthChanged)
         self.canvas.draw()
 
-    def foo(self, value):
-        print("untitled.ui")
-
     def widthChanged(self):
         newValue = self.horizontalSlider.value()
         self.ax.clear()
@@ -36,7 +29,8 @@ class Window(QDialog):
         self.ax.plot(x, y, '-')
         self.canvas.draw()
 
-app = QApplication(sys.argv)
-ex = Window()
-ex.show()
-sys.exit(app.exec_())
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = Window()
+    ex.show()
+    sys.exit(app.exec_())
