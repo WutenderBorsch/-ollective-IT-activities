@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import random
 
 from sklearn import linear_model
 from PIL import Image, ImageDraw 
@@ -25,10 +24,10 @@ plt.title('Цветовые каналы первой строки изобра�
 plt.grid()
 plt.show()
 
-#построение кривой, описывающая оттенки строки изображения
+#построение кривой, описывающей оттенки строки изображения
 def function(y):
 	lm = linear_model.LinearRegression()
-	lm.fit(X, y) #red
+	lm.fit(X, y)
 	predicted = lm.predict(X)
 	plt.plot(x, y, 'grey') #реальные значения
 	plt.plot(predicted, 'b') #предсказанные
@@ -37,16 +36,33 @@ def function(y):
 	plt.show()
 	return predicted
 
-c_predicted = function(y1)
-c_predicted = function(y2)
-c_predicted = function(y3)
-
 #кодирование разностей
-raz=y1 -c_predicted#разность
-bits_per_channel = 4#задаем сколько бит потребуется для хранения разностей в каждой точке
-threshold=bits_per_channel*2
-diff=np.clip(raz, 0, 135)
-y = c_predicted + diff
+def differences(c_y, i):
+    c_predicted = function(c_y)
+    raz = c_y - c_predicted #разность
+    bits_per_channel = i #задаем сколько бит потребуется для хранения разностей в каждой точке
+    threshold=bits_per_channel*2
+    diff=np.clip(raz, threshold, -threshold)
+    y = c_predicted + diff
+    return y
+
+bit = [3, 4, 5, 6, 7]
+B = []
+G = []
+R = []
+
+for i in range(len(bit)):
+    b_y = differences(y1, bit[i])
+    g_y = differences(y2, bit[i])
+    r_y = differences(y3, bit[i])
+    B.append([])
+    G.append([])
+    R.append([])
+    for j in range(1):
+        B[i].append(b_y)
+        G[i].append(g_y)
+        R[i].append(r_y)
+        
 
 #подмена пикселов в исходном изображении
 draw = ImageDraw.Draw(im) #создаем инструмент для рисования. 
@@ -61,26 +77,15 @@ for i in range(width):
 			S = (a + b + c) // 3
 			draw.point((i, j), (S, S, S))
 im.save('ready.png')
-del draw
 
-#Привести результаты кодирования изображения 3, 4, 5, 6 и 7 битами, а также исходное изображение. 
-raz=y1 -c_predicted#разность
-bits_per_channel = 3 
-threshold=bits_per_channel*2
-diff=np.clip(raz, 0, 135)
-y = c_predicted + diff 
-raz=y1 -c_predicted#разность
-bits_per_channel = 5 
-threshold=bits_per_channel*2
-diff=np.clip(raz, 0, 135)
-y = c_predicted + diff 
-raz=y1 -c_predicted#разность
-bits_per_channel = 6 
-threshold=bits_per_channel*2
-diff=np.clip(raz, 0, 135)
-y = c_predicted + diff 
-raz=y1 -c_predicted#разность
-bits_per_channel = 7 
-threshold=bits_per_channel*2
-diff=np.clip(raz, 0, 135)
-y = c_predicted + diff 
+#Привести результаты кодирования изображения 3, 4, 5, 6 и 7 битами, а также исходное изображение. 	
+for b in range(len(bit)):
+    for i in range(width):
+        for j in range(height):
+            cr = int(R[b][0][i])
+            cg = int(G[b][0][i])
+            cb = int(B[b][0][i])
+            S = (cr + cg + cb) // 3
+            draw.point((i, j), (S, S, S))
+    im.save(str(b) + '.png')
+del draw
